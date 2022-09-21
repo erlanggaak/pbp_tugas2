@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title": "Kimi no Nawa",
+            "rating": 8.86,
+            "release_date": "2016-12-07",
+            "review": "The film holds true to all the expectations of a Makoto Shinkai production, from heartfelt smiles to crying the 5th time within the last 30 minutes. His signature metaphorical use of trains, the idea of a hopeless and distant love, and beautiful scenery really dive you emotionally into the story, even for how generic and simple it may seem."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 2,
+        "fields": {
+            "watched": true,
+            "title": "Koe no Katachi",
+            "rating": 8.95,
+            "release_date": "2016-09-17",
+            "review": ""
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 3,
+        "fields": {
+            "watched": false,
+            "title": "Violet Evergarden Movie",
+            "rating": 8.93,
+            "release_date": "2020-09-18",
+            "review": ""
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 4,
+        "fields": {
+            "watched": true,
+            "title": "Kimi no Suizou wo Tabetai",
+            "rating": 8.56,
+            "release_date": "2018-09-01",
+            "review": "Kimi no Suizou wo Tabetai (I Want to Eat Your Pancreas) is predictable, heavy-handed, unoriginal, and, yet, I still love this film. I do not love the movie in any sort of guilty-pleasure way either; I unironically think Kimi no Suizou wo Tabetai is one of the best anime films I have ever seen. Why, though? Well, the film uses its predictability, heavy-handedness, and unoriginality to craft a message that is so unbelievably powerful, and it struck a chord with me and left my emotions in absolute, complete shambles"
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 5,
+        "fields": {
+            "watched": true,
+            "title": "Train to Busan",
+            "rating": 7.6,
+            "release_date": "2016-07-20",
+            "review": "This lively South Korean zombie flick arrives in Oz with a limited release, which is a pity as it's a riotous adventure filled to the brim with action, gore and damn interesting story beats. Like all good films within this subgenre, the narrative is rife with metaphors about modern day issues (parent-child connections, corporate greed, human interaction, etc) but it also provides a compelling survival plot when taken at face value."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 6,
+        "fields": {
+            "watched": true,
+            "title": "Parasite",
+            "rating": 8.5,
+            "release_date": "2019-05-30",
+            "review": "This movie is a gosh darn masterpiece. It will make you belly laugh, it will chill you to the bone, and it will make you shed a tear. This movie will stay with you long after the credits are over."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 7,
+        "fields": {
+            "watched": false,
+            "title": "Miracle in Cell No. 7",
+            "rating": 8.1,
+            "release_date": "2013-01-23",
+            "review": ""
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 8,
+        "fields": {
+            "watched": true,
+            "title": "Mencuri Raden Saleh",
+            "rating": 8.2,
+            "release_date": "2022-08-25",
+            "review": "This movie is not exceptional by doing something new, but because they know how to make each part fun and enjoyable. As a heist movie, it manages to capture adventure, drama, romance, and mystery in one pack with great storyline that came up from a single premise."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 9,
+        "fields": {
+            "watched": true,
+            "title": "Ada Apa dengan Cinta?",
+            "rating": 7.7,
+            "release_date": "2002-02-08",
+            "review": "Watching this movie makes you want to go back to the time where you were a high school. A movie that reflects our lives as a teenager with all the problems and excitement within. High school memories never be the unforgettable ones."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 10,
+        "fields": {
+            "watched": true,
+            "title": "Josee to Tora to Sakana-tachi",
+            "rating": 8.44,
+            "release_date": "2020-12-25",
+            "review": "This movie sounded amazing. Evan Call's soundtracks really elevated some of the more emotional and dramatic scenes, and Eve never ceases to amaze me with how good their songs are. Studio Bones absolutely nailed the animation too; from super detailed (and really cute!) characters to beautiful scenery shots, they certainly brought their A game here. 9/10 for both Art and Sound, for sure."
+        }
+    }
+]
