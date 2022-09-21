@@ -23,5 +23,7 @@ def show_watchlist(request):
     data_watchlist = MyWatchList.objects.all()
     context = {
         'watchlist': data_watchlist,
+        'nama': "Erlangga Ahmad Khadafi",
+        'npm': '2106750894',
     }
     return render(request, "mywatchlist.html", context)
