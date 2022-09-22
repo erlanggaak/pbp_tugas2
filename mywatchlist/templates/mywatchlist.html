@@ -9,10 +9,16 @@
 
   <h5>Student ID: </h5>
   <p>{{npm}}</p>
+
+  {% if is_watch_many == True %}
+  <h3>Selamat, kamu sudah banyak menonton!</h3>
+  {% else %}
+  <h3>Wah, kamu masih sedikit menonton!</h3>
+  {% endif %}
   
   <table>
     <tr>
-      <th>Watched?</th>
+      <th>Is Watched</th>
       <th>Title</th>
       <th>Rating</th>
       <th>Release Date</th>
@@ -21,7 +27,11 @@
     {% comment %} Add the data below this line {% endcomment %}
     {% for movie in watchlist %}
     <tr>
-        <th>{{movie.watched}}</th>
+        {% if movie.watched == True %}
+        <th>Sudah</th>
+        {% else %}
+        <th>Belum</th>
+        {% endif %}
         <th>{{movie.title}}</th>
         <th>{{movie.rating}}</th>
         <th>{{movie.release_date}}</th>
