@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Add Task</title>
+{% endblock meta %}
+
+{% block content %}
+
+<h1>Add Task</h1>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Title: </td>
+            <td><input type="text" name="title" placeholder="Title" class="form-control"></td>
+        </tr>
+                
+        <tr>
+            <td>Description: </td>
+            <td><input type="text" name="description" placeholder="Description" class="form-control"></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input class="btn add_task" type="submit" value="Add" href="{% url 'todolist:show_todolist' %}"></td>
+        </tr>
+    </table>
+</form> 
+
+{% endblock content %}

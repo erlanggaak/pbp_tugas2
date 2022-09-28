@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Username: {{request.user}}</h3>
+
+{% if task_list.count == 0 %}
+    <tr><th>Kamu belum memiliki Task aktif</th></tr>
+{% else %}  
+    <table>
+        <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date Created</th>
+        <th>Status</th>
+        <th>Checklist</th>
+        <th>Delete</th>
+            </tr>
+            {% for task in task_list %}
+                <tr>
+                    <th>{{task.title}}</th>
+                    <th>{{task.description}}</th>
+                    <th>{{task.date}}</th>
+                    {% if task.is_finished %}
+                        <th>Finished</th>
+                    {% else %}
+                        <th>Unfinished</th>
+                    {% endif %}
+                    <th><button><a href="{% url 'todolist:change_status' task.id %}">Status</a></button> </th>
+                    <th><button><a href="{% url 'todolist:delete' task.id %}">❌</a></button></th>
+                </tr>
+            {% endfor %}
+    </table>    
+{% endif %}
+<br>
+<button><a href="{% url 'todolist:add_task' %}">Add Task</a></button>
+<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+
+{% endblock content %}
