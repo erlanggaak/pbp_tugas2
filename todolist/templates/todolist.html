@@ -1,38 +1,53 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 {% extends 'base.html' %}
 
-{% block content %}
-<h3>Username: {{request.user}}</h3>
+ {% block content %}
 
-{% if task_list.count == 0 %}
-    <tr><th>Kamu belum memiliki Task aktif</th></tr>
-{% else %}  
-    <table>
-        <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Date Created</th>
-        <th>Status</th>
-        <th>Checklist</th>
-        <th>Delete</th>
-            </tr>
-            {% for task in task_list %}
-                <tr>
-                    <th>{{task.title}}</th>
-                    <th>{{task.description}}</th>
-                    <th>{{task.date}}</th>
-                    {% if task.is_finished %}
-                        <th>Finished</th>
-                    {% else %}
-                        <th>Unfinished</th>
-                    {% endif %}
-                    <th><button><a href="{% url 'todolist:change_status' task.id %}">Status</a></button> </th>
-                    <th><button><a href="{% url 'todolist:delete' task.id %}">❌</a></button></th>
-                </tr>
-            {% endfor %}
-    </table>    
-{% endif %}
-<br>
-<button><a href="{% url 'todolist:add_task' %}">Add Task</a></button>
-<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+<section class="vh-100 gradient-custom">
+  <h2 class="fs-4 fw-bold text-center">Hello, <span class="text fs-4 fw-bold">{{request.user}}</span>!</h2>
 
-{% endblock content %}
+  <div class="d-flex flex-wrap justify-content-center">
+    {% for task in task_list %}
+
+    <div class="card border-dark mx-3 my-4 zoom" style="max-width: 18rem;">
+        <div class="card-header bg-gray">Created Date: {{task.date}}</div>
+        <div class="card-body bg-dark text-white">
+            <h5 class="card-title">{{task.title}}</h5>
+            <p class="card-text">{{task.description}}</p>
+            <p class="card-text">
+                {% if task.is_finished == True %}
+                    <p class="text-success fw-bold fs-7">Finished
+                        <input type="checkbox" 
+                        id='{{task.id}}'
+                        {% if task.is_finished %} checked {% endif %}
+                        onchange="location.href=`{% url 'todolist:change_status' task.id %}`"
+                        />
+                    </p>
+                {% else %}
+                    <p class="text-danger fw-bold fs-7">Unfinished
+                        <input type="checkbox" 
+                        id='{{task.id}}'
+                        {% if task.is_finished %} checked {% endif %}
+                        onchange="location.href=`{% url 'todolist:change_status' task.id %}`"
+                        />
+                    </p>
+                {% endif %}
+            </p>
+            
+            <button class="btn"><a href="{% url 'todolist:delete' task.id %}"><i class="fa fa-trash"></i></a></button>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+<div class="my-3 text-center">
+  <button type="button" class="btn btn-lg btn-dark"><a class="link-light" href="{% url 'todolist:add_task' %}">Tambah Task</a></button>
+  <button type="button" class="btn btn-secondary btn-lg"><a class="link-light" href="{% url 'todolist:logout' %}">Logout</a></button>
+</div>
+</section>
+
+
+   
+ {% endblock content %}

@@ -6,26 +6,40 @@
 
 {% block content %}
 
-<h1>Add Task</h1>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <div class="d-flex justify-content-center">
+                            <form method="POST" action="" id="newForm">
+                                {% csrf_token %}
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="mb-md-5 mt-md-4 pb-5">
+                                        <h2 class="fw-bold mb-2 text-uppercase">Add Task</h2>
 
-<form method="POST" action="">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <td>Title: </td>
-            <td><input type="text" name="title" placeholder="Title" class="form-control"></td>
-        </tr>
-                
-        <tr>
-            <td>Description: </td>
-            <td><input type="text" name="description" placeholder="Description" class="form-control"></td>
-        </tr>
+                                        <div class="form-outline form-white mb-4">
+                                            <label class="form-label" for="typeEmailX">Title</label>
+                                            <input type="text" name="title" class="form-control form-control-lg" />
+                                        </div>
 
-        <tr>
-            <td></td>
-            <td><input class="btn add_task" type="submit" value="Add" href="{% url 'todolist:show_todolist' %}"></td>
-        </tr>
-    </table>
-</form> 
+                                        <div class="form-outline form-white mb-4">
+                                            <label class="form-label" for="typePasswordX">Description</label>
+                                            <textarea class="form-control rounded-10" name="description" id="description" rows="5"></textarea>        
+                                        </div>
+                                        <button class="btn btn-outline-light btn-lg px-5" type="submit"
+                                            value="Add Task">Add</button>
+                                    </div>
+                                </form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock content %}
