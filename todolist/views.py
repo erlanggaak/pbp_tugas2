@@ -1,4 +1,6 @@
 import datetime
+from django.http import HttpResponse, JsonResponse
+from django.core import serializers
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -18,18 +20,32 @@ def show_todolist(request):
     }
     return render(request, "todolist.html", context)
 
+def get_tasklist(request):
+    task_list = Task.objects.all().filter(user = request.user)
+    return HttpResponse(serializers.serialize("json", task_list), content_type="application/json")
+
 @login_required(login_url='/todolist/login/')
 def add_task(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        Task.objects.create(
+        task = Task.objects.create(
             user = request.user,
             title = title,
             description = description,
         )
-        return HttpResponseRedirect(reverse("todolist:show_todolist"))
-    return render(request, "addtask.html")
+        return JsonResponse(
+            {
+                "pk": task.id, 
+                "fields": {
+                    "user": request.user.id,
+                    "date": task.date, 
+                    "title": task.title, 
+                    "description": task.description, 
+                    "is_finished": task.is_finished}
+            }, 
+            status=200)
+    # return render(request, "addtask.html")
 
 def register(request):
     form = UserCreationForm()

@@ -2,52 +2,157 @@
 
 {% extends 'base.html' %}
 
- {% block content %}
+{% block content %}
 
 <section class="vh-100 gradient-custom">
-  <h2 class="fs-4 fw-bold text-center">Hello, <span class="text fs-4 fw-bold">{{request.user}}</span>!</h2>
+    <h2 class="fs-4 fw-bold text-center">Hello, <span class="text fs-4 fw-bold">{{request.user}}</span>!</h2>
+    
+    <div class="d-flex flex-wrap justify-content-center" id="task_card">
 
-  <div class="d-flex flex-wrap justify-content-center">
-    {% for task in task_list %}
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content card bg-dark text-white">
+                <div class="modal-header">
+                    <h2 class="modal-title">Add Task</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-task" method="POST" action="">
+                        {% csrf_token %}
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="typeEmailX">Title</label>
+                                <input type="text" name="title" class="form-control form-control-lg" />
+                            </div>
 
-    <div class="card border-dark mx-3 my-4 zoom" style="max-width: 18rem;">
-        <div class="card-header bg-gray">Created Date: {{task.date}}</div>
-        <div class="card-body bg-dark text-white">
-            <h5 class="card-title">{{task.title}}</h5>
-            <p class="card-text">{{task.description}}</p>
-            <p class="card-text">
-                {% if task.is_finished == True %}
-                    <p class="text-success fw-bold fs-7">Finished
-                        <input type="checkbox" 
-                        id='{{task.id}}'
-                        {% if task.is_finished %} checked {% endif %}
-                        onchange="location.href=`{% url 'todolist:change_status' task.id %}`"
-                        />
-                    </p>
-                {% else %}
-                    <p class="text-danger fw-bold fs-7">Unfinished
-                        <input type="checkbox" 
-                        id='{{task.id}}'
-                        {% if task.is_finished %} checked {% endif %}
-                        onchange="location.href=`{% url 'todolist:change_status' task.id %}`"
-                        />
-                    </p>
-                {% endif %}
-            </p>
-            
-            <button class="btn"><a href="{% url 'todolist:delete' task.id %}"><i class="fa fa-trash"></i></a></button>
+                            <div class="form-outline form-white mb-4">
+                                <label class="form-label" for="typePasswordX">Description</label>
+                                <textarea class="form-control rounded-10" name="description" id="description"
+                                    rows="5"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg px-5" data-bs-dismiss="modal">Close</button>
+                    <button id="add-btn" onclick=postData() class="btn btn-outline-light btn-lg px-5" data-bs-dismiss="modal"
+                        name="submit">Create</button>
+                </div>
+            </div>
         </div>
     </div>
-
-    {% endfor %}
-
-</div>
-<div class="my-3 text-center">
-  <button type="button" class="btn btn-lg btn-dark"><a class="link-light" href="{% url 'todolist:add_task' %}">Tambah Task</a></button>
-  <button type="button" class="btn btn-secondary btn-lg"><a class="link-light" href="{% url 'todolist:logout' %}">Logout</a></button>
-</div>
+    <div class="my-3 text-center">
+        <button type="button" class="btn btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#addModal"
+            id="open-modal">Tambah Task</button>
+        <button type="button" class="btn btn-secondary btn-lg"><a class="link-light"
+                href="{% url 'todolist:logout' %}">Logout</a></button>
+    </div>
+    
 </section>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var countCard = $(document).ready(function () {
+        $.get("{%url 'todolist:get_tasklist'%}", function (data) {
+            countCard = data.length
+        })
+    })
 
-   
- {% endblock content %}
+    //$("#addModal").modal()
+
+    function loadData() {
+        console.log("Load Data")
+        $(document).ready(function () {
+            $.get("{%url 'todolist:get_tasklist'%}", function (data) {
+                $.each(data, function (key, value) {
+                    var newCard = `<div class="card border-dark mx-3 my-4 zoom" id=card${value.pk} style="max-width: 18rem;">
+                        <div class="card-header bg-gray">Created Date:${value.fields.date}</div> 
+                        <div class="card-body bg-dark text-white"> 
+                        <h5 class="card-title">${value.fields.title}</h5> 
+                        <p class="card-text">${value.fields.description}</p> 
+                        <p class="card-text">`
+                    if (value.fields.is_finished) {
+                        newCard += `<p class="text-success fw-bold fs-7" id="isfinished${value.pk}">Finished`
+                    }
+                    else {
+                        newCard += `<p class="text-success fw-bold fs-7 id="isfinished${value.pk}">Unfinished`
+                    }
+                    newCard += `<input type="checkbox"
+                            id="${value.fields.id}"
+                            onchange="location.href='change_status/${value.pk}'"
+                            />
+                            </p>
+                            </p>
+                            <button class="btn" id="delete${value.pk}" onclick=deleteCard(${value.pk})><a><i class="fa fa-trash"></i></a></button>
+                            </div>
+                            </div>`
+                    $("#task_card").append(newCard)
+
+                    console.log(value)
+                    console.log(value.pk)
+                })
+            })
+        })
+    }
+
+    function postData(){
+        console.log("Post Data")
+        $(document).ready(function(){
+            var form = $("#add-task").serialize()
+            $.ajax({
+                type: "POST",
+                url: "addtask/",
+                data: form,
+                dataType: "json",
+                encode: true,
+                success: function(){
+                    console.log("Done Post Data")
+                    $("#task_card").empty()
+                    loadData()
+                },
+                failure: function(data) { 
+                    alert('Got an error dude');
+                }
+            })
+        })
+    }
+
+    // function change_status(pk){
+    //     $.ajax({
+    //         
+    //         type: 'PUT',
+    //         success: function(data) {
+    //             $("#task_card").empty()
+    //             loadData()
+    //         },
+    //         failure: function(data) { 
+    //             alert('Got an error dude');
+    //         }
+    //     })
+    //     console.log("status clicked")
+    // }
+
+    function deleteCard(pk){
+        console.log("Delete Data")
+        $.ajax({
+            type: 'DELETE',
+            headers: { "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value },
+            url: "{% url 'todolist:delete' 1 %}".replace(1, pk),
+            encode: true,
+            success: function(data) {
+                $("#task_card").empty()
+                loadData()
+            },
+            failure: function(data) { 
+                alert('Got an error dude');
+            }
+        })
+    }
+
+    loadData();
+
+</script>
+
+{% endblock content %}
